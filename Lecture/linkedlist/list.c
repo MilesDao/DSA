@@ -57,7 +57,20 @@ void removed(List *l, int index)
     }
     l->size--;
 }
+// Dynamic array Lists
+typedef struct _listdynamic
+{
+    int size;
+    int capacity;
+    int *val;
+} List_dynamic;
 
+void init2(List_dynamic *l, int N)
+{
+    l->size = 0;
+    l->capacity = N;
+    l->val = (int *)malloc(sizeof(l->capacity));
+}
 int main()
 {
     List l;
