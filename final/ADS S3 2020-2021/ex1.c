@@ -14,17 +14,7 @@ Iteration. (8 pts)
 your answer. (2 pts)*/
 // 27 49
 #include <stdio.h>
-// int isPrime(int n, int i)
-// {
-//     if (n < 2)
-//         return 0;
-//     if (n % i == 0)
-//         return 0;
-//     if (i * i > n)
-//         return 1;
 
-//     return (n, i + 1);
-// }
 int gcd(int a, int b)
 {
     while (b != 0)
