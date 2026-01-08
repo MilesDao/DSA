@@ -17,7 +17,7 @@ int reverse(int n, int rev)
     if (n == 0)
         return rev;
     return reverse(n / 10, rev * 10 + n % 10);
-}
+} // O(log(n))
 
 int isPalindrome(int n)
 {
@@ -25,13 +25,13 @@ int isPalindrome(int n)
 }
 int isSumPalindrome(int n)
 {
-    int sum = n + reverse(n, 0);
+    int sum = n + reverse(n, 0); // O(log(n))
     return isPalindrome(sum);
 }
 int main()
 {
     int N = 56;
-    if (isSumPalindrome(N))
+    if (isSumPalindrome(N)) // O(log(n))
     {
         printf("palindromic");
     }

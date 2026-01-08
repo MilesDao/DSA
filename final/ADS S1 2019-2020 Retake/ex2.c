@@ -37,6 +37,9 @@ int iSphenic(int n)
     }
     return cnt == 3;
 }
+int isSphenic(int n, int i)
+{
+}
 int main()
 {
 
@@ -46,7 +49,7 @@ int main()
         {
             printf("%d ", i);
         }
-    }
+    } // O(n*n*sqrt(n))
 
     return 0;
 }

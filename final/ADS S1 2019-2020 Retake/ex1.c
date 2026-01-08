@@ -9,38 +9,31 @@ Example: 30 = 2 * 3* 5; 42 = 2*3*7; 66 = 2*3*11.
 answer. (2pts)*/
 
 #include <stdio.h>
-int isPrime(int n)
-{
-    if (n < 2)
-        return 0;
-    for (int i = 2; i * i <= n; i++)
-    {
-        if (n % i == 0)
-            return 0;
-    }
-    return 1;
-}
+
 int isSphenic(int n)
 {
-
     int cnt = 0;
-    for (int i = 2; i <= n; i++)
+    int lastFactor = -1;
+    for (int i = 2; i * i <= n && cnt < 3; i++)
     {
-        if (isPrime(i) && n % i == 0)
+        if (n % i == 0)
         {
-            int power = 0;
-            while (n % i == 0)
-            {
-                n /= i;
-                power++;
-            }
-            if (power > 1)
-                return 0;
+            n /= i;
             cnt++;
+            if (n % i == 0)
+                return 0;
+
+            lastFactor = i;
         }
+    }
+    // If n > 1 after the loop, the remaining n is the last prime factor
+    if (n > 1 && n != lastFactor)
+    {
+        cnt++;
     }
     return cnt == 3;
 }
+// O(sqrt(n))
 int main()
 {
 
@@ -48,7 +41,7 @@ int main()
     {
         if (isSphenic(i) == 1)
         {
-            printf("%d ", i);
+            printf("%d ", i); // O(n*sqrt(n))
         }
     }
     // isSphenic(42);

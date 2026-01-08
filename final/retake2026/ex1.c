@@ -1,5 +1,6 @@
 #include <stdio.h>
-int numdigit(int n)
+
+int count(int n)
 {
     int sum = 0;
     while (n > 0)
@@ -8,46 +9,30 @@ int numdigit(int n)
         sum++;
     }
     return sum;
-} // log n
-int powdigit(int n, int r)
+} // O(log(n))
+int power10(int n)
 {
-    if (r == 0)
+    if (n == 0)
         return 1;
-    return n * powdigit(n, r - 1);
+    return 10 * power10(n - 1);
 } // O(r)
-int test(int n)
+void split(int n)
 {
-    int left, right, sum = 0;
-
-    left = n / powdigit(10, numdigit(n) / 2);
-    right = n % powdigit(10, numdigit(n) / 2);
-    if (numdigit(right) < numdigit(left))
+    if (count(n) == 1)
+        return;
+    int first = n / power10(count(n) / 2); // O(logn)
+    int last = n % power10(count(n) / 2);  // O(logn)
+    if (count(first) > count(last))
     {
-        right *= 10;
+        last *= 10;
     }
-    sum = left + right;
-    if (numdigit(sum) == 1)
-        return sum;
-    return test(sum);
+    printf("%d + %d  = %d\n", first, last, first + last);
+    split(first + last);
 }
-int test2(int n)
-{
-    int left, right;
-    while (numdigit(n) != 1)
-    {
-        left = n / powdigit(10, numdigit(n) / 2);
-        right = n % powdigit(10, numdigit(n) / 2);
-        if (numdigit(right) < numdigit(left))
-        {
-            right *= 10;
-        }
-        n = left + right;
-    }
-    return n;
-}
+// total = O(logn)
 int main()
 {
-
-    printf("%d ", test2(4730)); // O(logn^2)
+    int n = 47360;
+    split(n);
     return 0;
 }

@@ -1,75 +1,82 @@
+/*
+Question 2: (4 pts)
+A MinStack is a specialized stack data structure that, in addition to the standard stack operations,
+can also return the minimum element currently stored in the stack, all in constant time, O(1).
+Your task is to propose a MinStack data structure that supports the following operations:
+1. push(x): Insert an element x onto the top of the stack
+2. pop(): Remove the element at the top of the stack.
+3. top(): Return the current top element of the stack without removing it.
+4. getMin(): Return the minimum element in the stack at the current moment.
+Note: This function must have a complexity of O(1). DO NOT propose an
+algorithm with loops, scan the stack, or use additional libraries.
+Hint: pop() removes only the top element, which is not always the minimum.
+However, if the popped element is the minimum, the data structure must correctly
+update and reveal the new minimum.
+Your tasks are:
+* Propose a data structure that supports all four operations in O(1) time. (1 pt)
+. Explain the process in each function (2 pts).
+. Justify the complexity of the proposed functions (1 pt).
+Note: A complete implementation in C is not required, pseudo-code is preferable.*/
+
 #include <stdio.h>
+#define MAX 100
 typedef struct
 {
-    int data[100];
+    int data[MAX];
     int top;
 } Stack;
-
-void init(Stack *s)
+typedef struct
 {
-    s->top = -1;
+    int data[MAX];
+    int top;
+} Min;
+
+void init(Stack *st)
+{
+    st->top = -1;
 }
-
-void push(Stack *s, Stack *minst, int x)
+void initMin(Min *st)
 {
-    if (s->top == 100 - 1)
+    st->top = -1;
+}
+int isEmpty(Stack *st)
+{
+    return st->top == -1;
+}
+void push(Stack *st, Min *m, int val)
+{
+    if (st->top == MAX - 1)
     {
         return;
     }
-    s->data[++s->top] = x;
-
-    if (minst->top == -1 || x <= minst->data[minst->top])
+    st->data[++st->top] = val;
+    if (m->top == -1)
+        m->data[++m->top] = val;
+    if (st->data[st->top] < m->data[m->top])
     {
-        minst->data[++minst->top] = x;
+        m->data[++m->top] = st->data[st->top];
     }
 }
-int pop(Stack *s, Stack *minst)
+int pop(Min *m)
 {
-    if (s->top == -1)
-    {
+    if (m->top == -1)
         return -1;
-    }
-    int x = s->data[s->top--];
-    if (x == minst->data[minst->top])
-    {
-        minst->top--;
-    };
-    return x;
+    return m->data[m->top--];
 }
 
-int top(Stack *s)
-{
-    return s->data[s->top];
-}
-int getMin(Stack *minst)
-{
-    if (minst->top == -1)
-        return -1;
-    return minst->data[minst->top];
-}
 int main()
 {
-    Stack S, MinS;
+    Stack st;
+    Min m;
+    initMin(&m);
+    init(&st);
+    push(&st, &m, 6);
+    push(&st, &m, 2);
+    push(&st, &m, 0);
+    push(&st, &m, 7);
+    push(&st, &m, 1);
+    push(&st, &m, 4);
 
-    init(&S);
-    init(&MinS);
-
-    push(&S, &MinS, 5);
-    push(&S, &MinS, 3);
-    push(&S, &MinS, 7);
-    push(&S, &MinS, 2);
-
-    printf("Top: %d\n", top(&S));       // 2
-    printf("Min: %d\n", getMin(&MinS)); // 2
-
-    pop(&S, &MinS);                               // pop 2
-    printf("Min after pop: %d\n", getMin(&MinS)); // 3
-
-    pop(&S, &MinS);                               // pop 7
-    printf("Min after pop: %d\n", getMin(&MinS)); // 3
-
-    pop(&S, &MinS);                               // pop 3
-    printf("Min after pop: %d\n", getMin(&MinS)); // 5
-
+    printf("Min = %d", pop(&m));
     return 0;
 }

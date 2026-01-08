@@ -49,33 +49,33 @@ int reverse(int n)
     {
         push(&s, n % 10);
         n /= 10;
-    }
+    } // O(log(n))
 
     int rev = 0;
     int i = 0;
-    while (i < length(&s))
+    while (i < length(&s)) // O(log(n))
     {
         rev = rev * 10 + s.data[i];
         i++;
     }
-    while (!isEmpty(&s))
+    while (!isEmpty(&s)) // O(log(n))
     {
         pop(&s);
     }
     return rev;
-}
+} // total = O(log(n))
 int isSumPalindrome(int n)
 {
     int sum = n + reverse(n);
     return sum == reverse(sum);
 }
-void display(Stack *s)
-{
-    for (int i = 0; i < length(s); i++)
-    {
-        printf("%d", s->data[i]);
-    }
-}
+// void display(Stack *s)
+// {
+//     for (int i = 0; i < length(s); i++)
+//     {
+//         printf("%d", s->data[i]);
+//     }
+// }
 int main()
 {
     int n = 55;
